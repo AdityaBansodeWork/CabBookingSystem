@@ -13,72 +13,57 @@
 
   <div class="history-list d-flex flex-column gap-3">
     
-    <div class="trip-card shadow-sm animate__animated animate__fadeInUp">
-      <div class="row align-items-center">
-        <div class="col-md-2 border-end text-center">
-          <div class="fw-bold fs-5 text-indigo-dark">24 Apr</div>
-          <small class="text-muted text-uppercase fw-bold">10:30 AM</small>
-          <div class="vehicle-badge mt-2 mx-auto">
-            <i class="bi bi-car-front-fill me-1"></i> SUV
-          </div>
-        </div>
-
-        <div class="col-md-6 px-4">
-          <div class="route-display">
-            <div class="route-item mb-2">
-              <i class="bi bi-record-circle text-success me-3"></i>
-              <span class="location-text">Kothrud, Pune</span>
-            </div>
-            <div class="route-line"></div>
-            <div class="route-item">
-              <i class="bi bi-geo-alt-fill text-danger me-3"></i>
-              <span class="location-text">Hinjewadi Phase 3</span>
+    @for (trip of trips; track trip.date) {
+      <div class="trip-card shadow-sm animate__animated animate__fadeInUp" 
+           [class.cancelled-trip]="trip.status === 'Cancelled'">
+        <div class="row align-items-center">
+          <div class="col-md-2 border-end text-center">
+            <div class="fw-bold fs-5 text-indigo-dark">{{trip.date}}</div>
+            <small class="text-muted text-uppercase fw-bold">{{trip.time}}</small>
+            <div class="vehicle-badge mt-2 mx-auto" [class.bg-light]="trip.status === 'Cancelled'">
+              <i class="bi bi-car-front-fill me-1"></i> {{trip.type}}
             </div>
           </div>
-        </div>
 
-        <div class="col-md-2 text-center">
-          <div class="fw-bold fs-4 text-indigo-dark">₹450.00</div>
-          <small class="text-success fw-bold"><i class="bi bi-check-circle"></i> Paid via Wallet</small>
-        </div>
+          <div class="col-md-6 px-4">
+            <div class="route-display" [class.opacity-50]="trip.status === 'Cancelled'">
+              <div class="route-item mb-2">
+                <i class="bi bi-record-circle text-success me-3"></i>
+                <span class="location-text">{{trip.pickup}}</span>
+              </div>
+              <div class="route-line"></div>
+              <div class="route-item">
+                <i class="bi bi-geo-alt-fill text-danger me-3"></i>
+                <span class="location-text">{{trip.drop}}</span>
+              </div>
+            </div>
+          </div>
 
-        <div class="col-md-2 text-end">
-          <button class="btn btn-fresh-blue rounded-pill px-4">Receipt</button>
+          <div class="col-md-2 text-center">
+            <div class="fw-bold fs-4" [class.text-indigo-dark]="trip.status !== 'Cancelled'" [class.text-muted]="trip.status === 'Cancelled'">
+              ₹{{trip.price}}.00
+            </div>
+            @if (trip.status === 'Completed') {
+              <small class="text-success fw-bold"><i class="bi bi-check-circle"></i> Paid via Wallet</small>
+            } @else {
+              <small class="text-danger fw-bold">Cancelled</small>
+            }
+          </div>
+
+          <div class="col-md-2 text-end">
+            @if (trip.status === 'Completed') {
+              <button class="btn btn-fresh-blue rounded-pill px-4" 
+                      (click)="downloadReceipt(trip)"
+                      [disabled]="isDownloading() === trip.date">
+                {{ isDownloading() === trip.date ? '...' : 'Receipt' }}
+              </button>
+            } @else {
+              <button class="btn btn-light rounded-pill px-4">Details</button>
+            }
+          </div>
         </div>
       </div>
-    </div>
-
-    <div class="trip-card shadow-sm cancelled-trip animate__animated animate__fadeInUp" style="animation-delay: 0.1s">
-      <div class="row align-items-center">
-        <div class="col-md-2 border-end text-center">
-          <div class="fw-bold fs-5 text-indigo-dark">22 Apr</div>
-          <small class="text-muted text-uppercase fw-bold">08:15 PM</small>
-          <div class="vehicle-badge mt-2 mx-auto bg-light text-muted">
-            <i class="bi bi-taxi-front me-1"></i> Sedan
-          </div>
-        </div>
-        <div class="col-md-6 px-4">
-          <div class="route-display opacity-50">
-            <div class="route-item mb-2">
-              <i class="bi bi-record-circle text-muted me-3"></i>
-              <span class="location-text">Pune Station</span>
-            </div>
-            <div class="route-line"></div>
-            <div class="route-item">
-              <i class="bi bi-geo-alt-fill text-muted me-3"></i>
-              <span class="location-text">Airport Terminal 2</span>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-2 text-center">
-          <div class="fw-bold fs-4 text-muted">₹0.00</div>
-          <small class="text-danger fw-bold">Cancelled</small>
-        </div>
-        <div class="col-md-2 text-end">
-          <button class="btn btn-light rounded-pill px-4">Details</button>
-        </div>
-      </div>
-    </div>
+    }
 
   </div>
 </div>

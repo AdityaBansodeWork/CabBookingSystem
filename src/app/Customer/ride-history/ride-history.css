@@ -1,74 +1,108 @@
-:root {
-  --indigo-dark: #1e1b4b;
-  --primary-fresh: #6366f1;
+.feedback-page-wrapper {
+  height: calc(100vh - 80px); /* Adjust based on your header height */
+  overflow: hidden;
 }
 
-.history-container {
-  max-width: 1000px;
-  margin: 0 auto;
+.bg-indigo-fresh {
+  background: linear-gradient(180deg, #6366f1 0%, #4f46e5 100%);
 }
 
-/* Trip Card Styling */
-.trip-card {
-  background: white;
-  border-radius: 24px;
-  padding: 25px;
-  border: 1px solid #f1f5f9;
-  transition: all 0.3s ease;
+.bg-indigo-soft { background: #e0e7ff; }
+
+.star-icon {
   cursor: pointer;
+  color: #cbd5e1;
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.trip-card:hover {
-  transform: scale(1.02);
-  box-shadow: 0 15px 35px rgba(99, 102, 241, 0.1) !important;
-  border-color: var(--primary-fresh);
+.star-icon.active {
+  color: #f59e0b;
+  transform: scale(1.2);
 }
 
-/* Vehicle Badge */
-.vehicle-badge {
-  width: fit-content;
-  background: #eef2ff;
-  color: var(--primary-fresh);
-  padding: 4px 12px;
+.tag-chip {
+  background: #f1f5f9;
+  border: 1px solid transparent;
+  padding: 8px 18px;
   border-radius: 50px;
-  font-size: 0.75rem;
-  font-weight: 800;
+  font-size: 0.85rem;
+  transition: 0.3s;
 }
 
-/* Route Visualizer */
-.route-display {
-  position: relative;
+.tag-chip.selected {
+  background: #6366f1;
+  color: white;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
 }
 
-.location-text {
-  font-weight: 500;
-  color: var(--indigo-dark);
+/* FAQ Styling */
+.faq-question {
+  cursor: pointer;
+  padding: 10px 0;
 }
 
-.route-line {
-  position: absolute;
-  left: 8px;
-  top: 25px;
-  height: 20px;
-  width: 2px;
-  border-left: 2px dashed #cbd5e1;
+.bg-white-translucent {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
 }
 
-/* Button Styling (Matches your Fresh Blue) */
-.btn-fresh-blue {
-  background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
-  color: #0369a1;
-  border: 1px solid #7dd3fc;
-  font-weight: 700;
+.icon-blob {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
 }
 
-.btn-fresh-blue:hover {
-  background: #bae6fd;
-  transform: translateY(-2px);
+.feedback-page-wrapper {
+  min-height: 85vh;
+  background: radial-gradient(circle at top left, rgba(99, 102, 241, 0.05), transparent);
 }
 
-/* Cancelled State */
-.cancelled-trip {
-  background: #fafafa;
-  border-left: 5px solid #ef4444;
+.side-info-pane {
+  width: 300px;
 }
+
+.glass-pane {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(10px);
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.feedback-card {
+  width: 100%;
+  max-width: 420px;
+  background: white;
+  padding: 35px;
+  border-radius: 30px;
+  border: 1px solid #f1f5f9;
+}
+
+/* Custom FAQ Accordion */
+.custom-faq .accordion-button {
+  font-size: 0.85rem;
+  font-weight: 600;
+  box-shadow: none;
+  color: #4b5563;
+}
+
+.custom-faq .accordion-button:not(.collapsed) {
+  color: #6366f1;
+}
+
+.star-btn { cursor: pointer; color: #e5e7eb; transition: 0.2s; }
+.star-btn.active { color: #fbbf24; transform: scale(1.1); }
+
+.tag-chip {
+  padding: 6px 15px;
+  border-radius: 50px;
+  border: 1px solid #e2e8f0;
+  background: white;
+  font-size: 0.8rem;
+  margin: 3px;
+  transition: 0.3s;
+}
+
+.tag-chip.selected { background: #6366f1; color: white; border-color: #6366f1; }

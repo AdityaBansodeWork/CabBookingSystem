@@ -1,0 +1,86 @@
+.glass-credit-card {
+  height: 240px;
+  background: linear-gradient(135deg, #6366f1 0%, #4338ca 100%);
+  border-radius: 28px;
+  padding: 35px;
+  color: white;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(99, 102, 241, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Subtle Card Pattern Overlay */
+.glass-credit-card::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 80%);
+}
+
+.card-chip {
+  width: 50px;
+  height: 40px;
+  background: linear-gradient(135deg, #fbbf24, #d97706);
+  border-radius: 8px;
+}
+
+.card-logo {
+  position: absolute;
+  top: 35px;
+  right: 35px;
+  font-weight: 800;
+  font-size: 1.4rem;
+}
+
+.card-number {
+  font-size: 1.5rem;
+  letter-spacing: 4px;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+/* Payment Method Selectors */
+.method-item {
+  flex: 1;
+  background: white;
+  padding: 20px;
+  border-radius: 20px;
+  text-align: center;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: 0.3s;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.method-item:hover, .method-item.active {
+  border-color: #6366f1;
+  background: #f8fafc;
+  color: #6366f1;
+  transform: translateY(-5px);
+}
+
+/* Transaction Styles */
+.tx-icon {
+  width: 45px;
+  height: 45px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+}
+
+.tx-item {
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+.tx-item:hover {
+  transform: scale(1.02);
+  border-left: 5px solid #6366f1;
+}

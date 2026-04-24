@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>GoDriver Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+
+  <!-- Animate.css -->
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
+</head>
+
+<body>
+
+<div class="driver-wrapper">
+
+  <!-- HEADER -->
+  <header class="status-bar glass">
+    <div class="left">
+      <h4 class="brand">Go<span>Driver</span></h4>
+
+      <div class="status-pill" id="statusText">
+        SYSTEM STANDBY
+      </div>
+    </div>
+
+    <div class="right">
+      <div class="earnings-widget">
+        <div class="coin"><i class="bi bi-currency-rupee"></i></div>
+        <div>
+          <small>TOTAL EARNINGS</small>
+          <strong>1,240.50</strong>
+        </div>
+      </div>
+
+      <div class="profile">
+        <img src="https://ui-avatars.com/api/?name=Adiii&background=f472b6&color=fff">
+        <span class="online" id="onlineDot"></span>
+      </div>
+    </div>
+  </header>
+
+  <div class="layout">
+
+    <!-- MAP -->
+    <main class="map">
+      <div class="map-placeholder">MAP VIEW</div>
+
+      <!-- OFFLINE OVERLAY -->
+      <div class="offline-overlay" id="offlineOverlay">
+        <i class="bi bi-shield-lock"></i>
+        <h2>Driver Offline</h2>
+        <p>Initialize system to receive rides</p>
+
+        <button class="btn-primary" onclick="goOnline()">
+          INITIALIZE SYSTEM
+        </button>
+      </div>
+
+      <!-- STATS -->
+      <div class="stats">
+        <div class="stat-card">
+          <i class="bi bi-star-fill"></i>
+          <strong>4.9</strong>
+          <small>RATING</small>
+        </div>
+      </div>
+    </main>
+
+    <!-- SIDE PANEL -->
+    <aside class="side-panel glass">
+      <div class="panel-header">
+        <h5>LIVE FEED</h5>
+        <span class="live-dot">● LIVE</span>
+      </div>
+
+      <div class="ride-card animate__animated animate__slideInRight">
+        <div class="top">
+          <span class="ride-type">ECONOMY</span>
+          <span class="price">₹245</span>
+        </div>
+
+        <div class="route">
+          <p><i class="bi bi-record-circle"></i> Pickup: 2.4 km</p>
+          <span class="line"></span>
+          <p><i class="bi bi-geo-alt-fill"></i> Drop: Kothrud</p>
+        </div>
+
+        <div class="actions">
+          <button class="accept" onclick="acceptRide()">
+            ACCEPT RIDE
+          </button>
+
+          <button class="decline">
+            <i class="bi bi-x-lg"></i>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+  </div>
+</div>
+
+<!-- ✅ WORKING JS -->
+<script>
+  function goOnline() {
+    document.getElementById('offlineOverlay').style.display = 'none';
+    document.getElementById('onlineDot').classList.add('pulse');
+    document.getElementById('statusText').innerText = 'SYSTEM ACTIVE';
+    document.getElementById('statusText').style.color = '#22c55e';
+  }
+
+  function acceptRide() {
+    alert('✅ Ride Accepted!');
+  }
+</script>
+
+</body>
+</html>

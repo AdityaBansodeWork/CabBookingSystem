@@ -1,0 +1,65 @@
+<div class="fresh-login-wrapper d-flex justify-content-center align-items-center">
+  
+  <div class="animated-bg">
+    <div class="scrolling-city"></div>
+    
+    <svg class="moving-cab" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 50">
+        <path d="M15,35 L105,35 L105,25 Q105,15 90,15 L70,15 L55,5 L25,5 Q15,5 15,15 Z" fill="#6366f1"/>
+        <path d="M30,8 L53,8 L65,18 L30,18 Z" fill="rgba(255,255,255,0.4)"/>
+        <path d="M58,8 L85,8 Q95,8 95,18 L70,18 Z" fill="rgba(255,255,255,0.4)"/>
+        <rect x="100" y="22" width="5" height="2" fill="#f472b6" class="cab-light"/>
+        <circle cx="35" cy="35" r="7" fill="#1e293b" stroke="#fff" stroke-width="1"/>
+        <circle cx="85" cy="35" r="7" fill="#1e293b" stroke="#fff" stroke-width="1"/>
+    </svg>
+  </div>
+
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+
+  <div class="login-card-fresh animate__animated animate__fadeInDown">
+    <div class="text-center mb-5">
+      <div class="logo-container mb-3">
+        <i class="bi bi-geo-alt-fill text-primary-glow fs-1"></i>
+      </div>
+      <h2 class="fw-bold text-primary-dark mb-1">Welcome Back</h2>
+      <p class="text-secondary-fresh">Log in to your CogRide account</p>
+    </div>
+
+    <form #loginForm="ngForm" (ngSubmit)="onLogin(loginForm)">
+      
+      <div class="modern-input-group mb-4">
+        <label class="input-label">EMAIL ADDRESS</label>
+        <div class="input-with-icon">
+          <i class="bi bi-envelope text-primary"></i>
+          <input type="email" name="email" ngModel #email="ngModel" placeholder="example@goride.com" required email>
+        </div>
+      </div>
+
+      <div class="modern-input-group mb-4">
+        <label class="input-label">PASSWORD</label>
+        <div class="input-with-icon">
+          <i class="bi bi-shield-lock text-primary"></i>
+          <input type="password" name="password" ngModel #password="ngModel" placeholder="••••••••" required>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-between align-items-center mb-5">
+        <div class="form-check">
+          <input type="checkbox" class="form-check-input" id="remember">
+          <label class="form-check-label small text-secondary-fresh" for="remember">Keep me logged in</label>
+        </div>
+        <a href="#" class="text-primary fw-bold small text-decoration-none hover-link">Forgot?</a>
+      </div>
+
+      <button type="submit" class="btn btn-pink-fresh w-100 py-3 fw-bold mb-4 shadow" [disabled]="loginForm.invalid">
+      <!-- <button type="submit" class="btn btn-pink-fresh w-100 py-3 fw-bold mb-4 shadow"> -->
+        LOG IN TO SYSTEM
+      </button>
+
+      <div class="text-center">
+        <span class="text-secondary-fresh small">New here?</span>
+        <a routerLink="/register" class="text-primary fw-bold text-decoration-none ms-2 register-cta">CREATE ACCOUNT</a>
+      </div>
+    </form>
+  </div>
+</div>

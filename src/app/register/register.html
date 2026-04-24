@@ -1,0 +1,122 @@
+<!-- <form [formGroup]="regForm" (ngSubmit)="register()">
+
+    <div class="form-floating mb-3">
+        
+        <input type="text" id="name" name="name" class="form-control" formControlName="name">
+        <label for="name">Enter Name</label>
+
+    </div>
+    
+    
+    <div class="form-floating mb-3">
+        <input type="text" id="phNo" name="phNo" class="form-control" formControlName="phNo">
+        <label for="phNo">Enter Phone No</label>
+    </div>
+    
+    <div class="form-floating mb-3">
+        <input type="email" id="email" name="email" class="form-control" formControlName="email">
+        <label for="email">Email</label>
+    </div>
+
+    <div>
+
+        <input type="radio" id="male" name="gender" value="male" formControlName="gender">
+        <label for="male">Male</label>
+        
+        <input type="radio" id="female" name="gender" value="female">
+        <label for="female">Female</label>
+    </div>
+
+    <div class="form-floating mb-3">
+        <select name="role" id="role" [(ngModel)]="role" class="form-control" formControlName="role">
+            <option value="" hidden>--Select Role--</option>
+            <option value="customer">Customer</option>
+            <option value="driver">Driver</option>
+        </select>
+    </div>
+
+    <div class="form-floating mb-3">
+        
+        @if(role() == 'driver'){
+            <input type="text" id="drivingL" name="drivingL" formControlName="drivingL" class="form-control">
+            <label for="drivingL">Enter Driving License</label>
+        }
+    </div>
+
+    <div class="form-floating mb-3">
+        <input type="password" id="password" name="password" class="form-control" formControlName="password">
+        <label for="password">Password</label>  
+    </div>
+
+    <div class="center">
+        <button type="submit" class="btn btn-primary">Register</button>
+    </div>
+
+</form> -->
+
+
+
+<div class="registration-container d-flex justify-content-center align-items-center">
+    <div class="registration-card animate__animated animate__fadeInUp">
+        <div class="text-center mb-4">
+            <h2 class="fw-bold text-primary">Join the Ride</h2>
+            <p class="text-muted">Create your account to start booking</p>
+        </div>
+
+        <form [formGroup]="regForm" (ngSubmit)="register()">
+            <div class="form-floating mb-3">
+                <input type="text" id="name" class="form-control custom-input" formControlName="name" placeholder="Name">
+                <label for="name"><i class="bi bi-person me-2"></i>Full Name</label>
+            </div>
+            
+            <div class="form-floating mb-3">
+                <input type="text" id="phNo" class="form-control custom-input" formControlName="phNo" placeholder="Phone">
+                <label for="phNo"><i class="bi bi-telephone me-2"></i>Phone Number</label>
+            </div>
+            
+            <div class="form-floating mb-3">
+                <input type="email" id="email" class="form-control custom-input" formControlName="email" placeholder="Email">
+                <label for="email"><i class="bi bi-envelope me-2"></i>Email Address</label>
+            </div>
+
+            <div class="gender-selection mb-3 p-2 border rounded">
+                <small class="text-muted d-block mb-2">Gender</small>
+                <div class="d-flex gap-4">
+                    <div class="form-check">
+                        <input type="radio" id="male" name="gender" value="male" formControlName="gender" class="form-check-input">
+                        <label class="form-check-label" for="male">Male</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" id="female" name="gender" value="female" formControlName="gender" class="form-check-input">
+                        <label class="form-check-label" for="female">Female</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-floating mb-3">
+                <select name="role" id="role" class="form-select custom-input" formControlName="role">
+                    <option value="" hidden>--Select Role--</option>
+                    <option value="customer">🚗 Customer (I want a ride)</option>
+                    <option value="driver">🚕 Driver (I want to earn)</option>
+                </select>
+                <label for="role">User Role</label>
+            </div>
+
+            @if(regForm.get('role')?.value === 'driver'){
+                <div class="form-floating mb-3 animate__animated animate__fadeInDown">
+                    <input type="text" id="drivingL" formControlName="drivingL" class="form-control custom-input" placeholder="License">
+                    <label for="drivingL">Driving License Number</label>
+                </div>
+            }
+
+            <div class="form-floating mb-4">
+                <input type="password" id="password" class="form-control custom-input" formControlName="password" placeholder="Password">
+                <label for="password">Password</label>  
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100 py-3 register-btn" [disabled]="regForm.invalid">
+                Create Account
+            </button>
+        </form>
+    </div>
+</div>

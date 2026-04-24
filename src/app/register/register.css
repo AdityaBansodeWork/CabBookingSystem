@@ -1,0 +1,53 @@
+/* Container with a vibrant gradient background */
+.registration-container {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 20px;
+}
+
+/* Glassmorphism Card */
+.registration-card {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+    max-width: 450px;
+    width: 100%;
+}
+
+/* Custom Input Styling */
+.custom-input {
+    border: none;
+    border-bottom: 2px solid #eee;
+    border-radius: 0;
+    transition: all 0.3s ease;
+}
+
+.custom-input:focus {
+    box-shadow: none;
+    border-bottom-color: #667eea;
+}
+
+/* Button Hover Animation */
+.register-btn {
+    border-radius: 50px;
+    background: linear-gradient(to right, #667eea, #764ba2);
+    border: none;
+    font-weight: bold;
+    letter-spacing: 1px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.register-btn:hover:not(:disabled) {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(118, 75, 162, 0.3);
+}
+
+.register-btn:active {
+    transform: translateY(0);
+}
+
+/* Form floating label adjustment */
+.form-floating > label {
+    color: #999;
+}

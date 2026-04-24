@@ -1,0 +1,74 @@
+.dashboard-wrapper {
+  height: 100vh;
+  overflow: hidden;
+  background-color: #f8f9fa;
+}
+
+/* Sidebar Styling */
+.sidebar {
+  width: 260px;
+  background: #1a1a1a;
+  display: flex;
+  flex-direction: column;
+  /* z-index: 1000; */
+}
+
+.sidebar .nav-link {
+  color: #888;
+  padding: 12px 20px;
+  border-radius: 12px;
+  transition: all 0.3s;
+}
+
+.sidebar .nav-link:hover, .sidebar .nav-link.active {
+  background: #1a1a1a;
+  color: #fff;
+}
+
+/* Floating Elements */
+.top-header {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 500;
+}
+
+.booking-float-card {
+  position: absolute;
+  top: 100px;
+  left: 30px;
+  width: 380px;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  padding: 30px;
+  border-radius: 24px;
+  z-index: 600;
+}
+
+/* Ride Selection Cards */
+.ride-type-card {
+  border: 2px solid #f0f0f0;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: 0.2s;
+  background: white;
+}
+
+.ride-type-card:hover, .ride-type-card.active {
+  border-color: #667eea;
+  background: #f0f3ff;
+  color: #667eea;
+}
+
+/* Container to align image and text horizontally */
+.logo-container {
+  padding: 10px;
+  gap: 12px; /* Space between the car icon and the text */
+}
+
+/* Control the logo image size specifically */
+.sidebar-logo-img {
+  width: 55px;          /* Adjust this until it looks right to you */
+  height: auto;         /* Maintains aspect ratio so it doesn't look stretched */
+  object-fit: contain;  /* Ensures the image fits within the bounds */
+}

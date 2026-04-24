@@ -1,0 +1,84 @@
+<div class="history-container p-4 animate__animated animate__fadeIn">
+  <div class="d-flex justify-content-between align-items-end mb-4">
+    <div>
+      <h2 class="fw-bold text-indigo-dark mb-1">My Trips</h2>
+      <p class="text-muted small">You have completed <span class="text-primary-fresh fw-bold">12 rides</span> this month</p>
+    </div>
+    <div class="filter-pills d-flex gap-2">
+      <button class="btn btn-sm btn-outline-primary rounded-pill px-3 active">All</button>
+      <button class="btn btn-sm btn-outline-primary rounded-pill px-3">Completed</button>
+      <button class="btn btn-sm btn-outline-primary rounded-pill px-3">Cancelled</button>
+    </div>
+  </div>
+
+  <div class="history-list d-flex flex-column gap-3">
+    
+    <div class="trip-card shadow-sm animate__animated animate__fadeInUp">
+      <div class="row align-items-center">
+        <div class="col-md-2 border-end text-center">
+          <div class="fw-bold fs-5 text-indigo-dark">24 Apr</div>
+          <small class="text-muted text-uppercase fw-bold">10:30 AM</small>
+          <div class="vehicle-badge mt-2 mx-auto">
+            <i class="bi bi-car-front-fill me-1"></i> SUV
+          </div>
+        </div>
+
+        <div class="col-md-6 px-4">
+          <div class="route-display">
+            <div class="route-item mb-2">
+              <i class="bi bi-record-circle text-success me-3"></i>
+              <span class="location-text">Kothrud, Pune</span>
+            </div>
+            <div class="route-line"></div>
+            <div class="route-item">
+              <i class="bi bi-geo-alt-fill text-danger me-3"></i>
+              <span class="location-text">Hinjewadi Phase 3</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-2 text-center">
+          <div class="fw-bold fs-4 text-indigo-dark">₹450.00</div>
+          <small class="text-success fw-bold"><i class="bi bi-check-circle"></i> Paid via Wallet</small>
+        </div>
+
+        <div class="col-md-2 text-end">
+          <button class="btn btn-fresh-blue rounded-pill px-4">Receipt</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="trip-card shadow-sm cancelled-trip animate__animated animate__fadeInUp" style="animation-delay: 0.1s">
+      <div class="row align-items-center">
+        <div class="col-md-2 border-end text-center">
+          <div class="fw-bold fs-5 text-indigo-dark">22 Apr</div>
+          <small class="text-muted text-uppercase fw-bold">08:15 PM</small>
+          <div class="vehicle-badge mt-2 mx-auto bg-light text-muted">
+            <i class="bi bi-taxi-front me-1"></i> Sedan
+          </div>
+        </div>
+        <div class="col-md-6 px-4">
+          <div class="route-display opacity-50">
+            <div class="route-item mb-2">
+              <i class="bi bi-record-circle text-muted me-3"></i>
+              <span class="location-text">Pune Station</span>
+            </div>
+            <div class="route-line"></div>
+            <div class="route-item">
+              <i class="bi bi-geo-alt-fill text-muted me-3"></i>
+              <span class="location-text">Airport Terminal 2</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2 text-center">
+          <div class="fw-bold fs-4 text-muted">₹0.00</div>
+          <small class="text-danger fw-bold">Cancelled</small>
+        </div>
+        <div class="col-md-2 text-end">
+          <button class="btn btn-light rounded-pill px-4">Details</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

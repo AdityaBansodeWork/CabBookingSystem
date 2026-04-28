@@ -1,1 +1,73 @@
-<p>feedback works!</p>
+<div class="feedback-page-wrapper d-flex align-items-center justify-content-center p-3">
+  
+  <div class="side-panel d-none d-lg-block animate__animated animate__fadeInLeft">
+    <div class="glass-info p-4 shadow-sm">
+      <h5 class="fw-bold text-indigo-dark mb-3"><i class="bi bi-receipt me-2"></i>Trip Summary</h5>
+      <div class="summary-details">
+        <div class="mb-2"><strong>Driver:</strong> John Doe</div>
+        <div class="mb-2"><strong>Car:</strong> SUV - MH12 AB 1234</div>
+        <div class="text-muted small">24 Apr 2026 • 10:30 AM</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="feedback-card shadow-lg mx-lg-5 animate__animated animate__zoomIn">
+    <div class="text-center">
+      <h3 class="fw-bold text-indigo-dark mb-1">How was Your ride</h3>
+      <p class="text-muted small">Tap a star to rate John</p> 
+    </div>
+
+    <div class="stars-container text-center">
+      <div class="d-flex justify-content-center">
+        @for (star of [1,2,3,4,5]; track star) {
+          <div class="star-clickable" (click)="rating.set(star)">
+            @if (rating() >= star) {
+              <i class="bi bi-star-fill golden-star mx-1"></i>
+            } @else {
+              <i class="bi bi-star grey-star mx-1"></i>
+            }
+          </div>
+        }
+      </div>
+      
+      <div class="rating-badge-wrapper">
+        @if (rating() > 0) {
+          <span class="badge rounded-pill bg-warning text-dark px-3 py-2 animate__animated animate__bounceIn">
+            You rated: {{rating()}} / 5 Stars
+          </span>
+        }
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label fw-bold text-indigo-dark mb-2">Write your experience:</label>
+      <textarea 
+        class="form-control feedback-input shadow-sm" 
+        rows="3" 
+        placeholder="Tell us about the ride..."
+        [(ngModel)]="comment">
+      </textarea>
+    </div>
+
+    <button 
+      class="btn btn-submit-feedback w-100 py-3 rounded-pill fw-bold shadow-sm mt-3"
+      [disabled]="isSubmitting() || rating() === 0"
+      (click)="submitFeedback()">
+      @if (isSubmitting()) {
+        <span class="spinner-border spinner-border-sm me-2"></span> SUBMITTING...
+      } @else {
+        SUBMIT FEEDBACK
+      }
+    </button>
+  </div>
+
+  <div class="side-panel d-none d-md-block animate__animated animate__fadeInRight">
+    <div class="glass-info p-4 shadow-sm">
+      <h5 class="fw-bold text-indigo-dark mb-3"><i class="bi bi-chat-dots me-2"></i>Support</h5>
+      <details class="mb-2 custom-details">
+        <summary class="small fw-bold">Lost an item?</summary>
+        <p class="tiny-text text-muted p-2 bg-white rounded mt-1 shadow-sm">Call +91 12345 67890</p>
+      </details>
+    </div>
+  </div>
+</div>

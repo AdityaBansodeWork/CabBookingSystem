@@ -1,82 +1,72 @@
-<div class="payment-container p-4 animate__animated animate__fadeIn">
-  <div class="row g-4">
-    
-    <div class="col-lg-5">
-      <h4 class="fw-bold text-indigo-dark mb-4">My Digital Wallet</h4>
-      
-      <div class="glass-credit-card mb-4 animate__animated animate__flipInX">
-        <div class="card-chip"></div>
-        <div class="card-logo">Cog<span class="text-warning">Cab</span></div>
-        <div class="card-number mt-5">**** **** **** 4582</div>
-        <div class="d-flex justify-content-between align-items-end mt-4">
-          <div>
-            <small class="text-white-50 d-block">CARD HOLDER</small>
-            <span class="fw-bold">ADIII ENTERPRISES</span>
-          </div>
-          <div>
-            <small class="text-white-50 d-block">EXPIRES</small>
-            <span class="fw-bold">09/29</span>
-          </div>
-        </div>
+<div class="payment-wrapper d-flex align-items-center justify-content-center p-3">
+  
+  @if (hasPendingPayment()) {
+    <div class="payment-card shadow-lg animate__animated animate__fadeInDown">
+      <div class="text-center mb-4">
+        <span class="badge bg-danger-subtle text-danger px-3 mb-2">Payment Pending</span>
+        <h3 class="fw-bold text-indigo-dark">Complete Your Payment</h3>
+        <p class="text-muted small">Ride ID: {{pendingRide.id}}</p>
       </div>
 
-      <div class="balance-pane p-4 shadow-sm rounded-4 bg-white mb-4">
-        <small class="text-muted fw-bold ls-1">AVAILABLE BALANCE</small>
+      <div class="ride-summary-box mb-4 p-3 rounded-4">
         <div class="d-flex justify-content-between align-items-center">
-          <h1 class="fw-black text-indigo-dark mb-0">₹2,840.50</h1>
-          <button class="btn btn-blue-fresh rounded-pill px-4">+ Top Up</button>
+          <div>
+            <div class="fw-bold text-indigo-dark">{{pendingRide.route}}</div>
+            <small class="text-muted">{{pendingRide.date}}</small>
+          </div>
+          <h2 class="fw-bold mb-0">₹{{pendingRide.fare}}</h2>
         </div>
       </div>
-    </div>
 
-    <div class="col-lg-7">
-      <h4 class="fw-bold text-indigo-dark mb-4">Saved Methods</h4>
+      <p class="text-muted small fw-bold text-uppercase mb-2">Select Method</p>
       
-      <div class="methods-grid d-flex gap-3 mb-5">
-        <div class="method-item active">
-          <i class="bi bi-credit-card-2-front fs-3"></i>
-          <span class="small fw-bold">Cards</span>
+      <div class="method-list gap-2 d-flex flex-column">
+        <div class="method-box" [class.active]="selectedMethod() === 'wallet'" (click)="selectedMethod.set('wallet')">
+          <i class="bi bi-wallet2 me-3"></i> <span>CogRide Wallet</span>
+          <i class="bi bi-check-circle-fill ms-auto" *ngIf="selectedMethod() === 'wallet'"></i>
         </div>
-        <div class="method-item">
-          <i class="bi bi-bank fs-3"></i>
-          <span class="small fw-bold">UPI/Net</span>
-        </div>
-        <div class="method-item">
-          <i class="bi bi-paypal fs-3"></i>
-          <span class="small fw-bold">Wallet</span>
+        <div class="method-box" [class.active]="selectedMethod() === 'upi'" (click)="selectedMethod.set('upi')">
+          <i class="bi bi-qr-code-scan me-3"></i> <span>UPI (GPay/PhonePe)</span>
+          <i class="bi bi-check-circle-fill ms-auto" *ngIf="selectedMethod() === 'upi'"></i>
         </div>
       </div>
 
-      <h5 class="fw-bold text-indigo-dark mb-3">Recent Transactions</h5>
-      <div class="transaction-list">
-        <div class="tx-item d-flex align-items-center p-3 mb-3 bg-white rounded-4 shadow-sm animate__animated animate__fadeInRight">
-          <div class="tx-icon bg-success-subtle text-success me-3">
-            <i class="bi bi-arrow-up-right"></i>
-          </div>
-          <div class="flex-grow-1">
-            <h6 class="mb-0 fw-bold">Ride Payment</h6>
-            <small class="text-muted">Trip #45821 • 2 hours ago</small>
-          </div>
-          <div class="text-end">
-            <div class="fw-bold text-danger">- ₹245.00</div>
-            <small class="text-muted">Visa 4582</small>
-          </div>
-        </div>
-
-        <div class="tx-item d-flex align-items-center p-3 mb-3 bg-white rounded-4 shadow-sm animate__animated animate__fadeInRight" style="animation-delay: 0.1s">
-          <div class="tx-icon bg-primary-subtle text-primary me-3">
-            <i class="bi bi-plus-lg"></i>
-          </div>
-          <div class="flex-grow-1">
-            <h6 class="mb-0 fw-bold">Added to Wallet</h6>
-            <small class="text-muted">via HDFC Bank • Yesterday</small>
-          </div>
-          <div class="text-end">
-            <div class="fw-bold text-success">+ ₹1,000.00</div>
-            <small class="text-muted">Success</small>
-          </div>
-        </div>
-      </div>
+      <button class="btn btn-pay w-100 py-3 rounded-pill fw-bold mt-4 shadow"
+              [disabled]="isProcessing()" (click)="processPayment()">
+        {{ isProcessing() ? 'Processing...' : 'Pay Now' }}
+      </button>
     </div>
-  </div>
+  }
+
+  @else {
+    <div class="payment-card shadow-lg animate__animated animate__fadeInUp">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h3 class="fw-bold text-indigo-dark mb-0">Payment History</h3>
+        <i class="bi bi-clock-history fs-4 text-muted"></i>
+      </div>
+
+      <div class="history-list">
+        @for (item of history; track item.id) {
+          <div class="history-item d-flex justify-content-between align-items-center p-3 mb-2">
+            <div class="d-flex align-items-center">
+              <div class="icon-box me-3"><i class="bi bi-check2-circle text-success"></i></div>
+              <div>
+                <div class="fw-bold small">{{item.id}}</div>
+                <small class="text-muted">{{item.date}} • {{item.method}}</small>
+              </div>
+            </div>
+            <div class="text-end">
+              <div class="fw-bold text-indigo-dark">₹{{item.amount}}</div>
+              <small class="text-success tiny">Successful</small>
+            </div>
+          </div>
+        }
+      </div>
+
+      <button class="btn btn-outline-indigo w-100 mt-4 rounded-pill fw-bold" 
+              (click)="hasPendingPayment.set(true)">
+        Back to Dashboard
+      </button>
+    </div>
+  }
 </div>

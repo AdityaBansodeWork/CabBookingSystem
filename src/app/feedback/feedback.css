@@ -1,0 +1,70 @@
+/* Container Background */
+.feedback-page-wrapper {
+  min-height: 90vh;
+  background-color: #f8fafc;
+  display: flex;
+  align-items: center;
+}
+
+.feedback-card {
+  width: 100%;
+  max-width: 480px;
+  background: #ffffff;
+  padding: 2.5rem; /* Slightly reduced padding */
+  border-radius: 30px;
+  border: 1px solid #edf2f7;
+}
+
+/* REDUCED SPACE: Star Section */
+.stars-container {
+  padding: 5px 0; /* Tightened from 20px */
+  margin-bottom: 10px; /* Reduced space below stars */
+}
+
+.star-clickable i {
+  font-size: 2.8rem !important; /* Slightly smaller to save space */
+}
+
+.golden-star { color: #FFD700 !important; }
+.grey-star { color: #cbd5e1 !important; }
+
+/* REDUCED SPACE: Between "You Rated" and Textarea */
+.rating-badge-wrapper {
+  min-height: 35px;
+  margin-bottom: 5px; /* Pulls the textarea up */
+}
+
+.rating-badge-wrapper .badge {
+  font-size: 0.8rem;
+}
+
+/* REDUCED SPACE: Form Group */
+.form-group {
+  margin-top: 5px; /* Pulls textarea closer to the rating badge */
+}
+
+.feedback-input {
+  border: 2px solid #cbd5e1 !important;
+  border-radius: 12px;
+  padding: 0.8rem;
+}
+
+/* SUBMIT BUTTON */
+.btn-submit-feedback {
+  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+  color: white;
+  border: none;
+}
+
+.btn-submit-feedback:disabled {
+  background: #e2e8f0;
+  color: #94a3b8;
+}
+
+/* SIDE PANELS */
+.glass-info {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  width: 260px;
+}

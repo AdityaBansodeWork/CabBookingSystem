@@ -1,58 +1,213 @@
 <main>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 
   <div class="booking-view-container d-flex p-4">
-
     <div class="booking-float-card shadow-lg">
-      <h5 class="fw-bold mb-4">Where to?</h5>
 
-      <div class="location-inputs mb-4">
-        <div class="input-group mb-2">
-          <span class="input-group-text bg-light border-0"></span>
-          <input type="text" class="form-control border-0 bg-light" placeholder="Pickup Location">
+      @if(rideCheckoutDetails) {
+        <h5 class="fw-bold mb-4">Checkout</h5>
+        <div class="summary-card">
+          <div class="mb-2"><small class="text-muted d-block">FROM</small><strong>{{rideCheckoutDetails.pickup}}</strong></div>
+          <div class="mb-2"><small class="text-muted d-block">TO</small><strong>{{rideCheckoutDetails.drop}}</strong></div>
+          <hr>
+          <div class="d-flex justify-content-between mb-1"><span>Distance</span><span>{{rideCheckoutDetails.distance}} KM</span></div>
+          <div class="d-flex justify-content-between mb-1"><span>Vehicle</span><span>{{rideCheckoutDetails.vehicle | titlecase}}</span></div>
+          <hr>
+          <div class="d-flex justify-content-between mb-1"><span>Fare</span><span>₹ {{rideCheckoutDetails.fare}}</span></div>
+          <div class="d-flex justify-content-between mb-1"><span>GST</span><span>₹ {{rideCheckoutDetails.gst}}</span></div>
+          <div class="d-flex justify-content-between fw-bold mt-2"><span>Total</span><span>₹ {{rideCheckoutDetails.fare + rideCheckoutDetails.gst | number}}</span></div>
+        </div>
+        <button (click)="bookRide()" class="btn btn-primary w-100 py-3 mt-4 rounded-3 fw-bold">Book Ride</button>
+      }
+
+      @else if((driverService.rideDetails$ | async)?.distance && (driverService.rideDetails$ | async)?.time) {
+        <h5 class="fw-bold mb-2">Choose a ride</h5>
+        <p class="small text-muted mb-3">{{pickup | titlecase}} -> {{drop | titlecase}}</p>
+        <p class="meta-info mb-4 small">
+          Distance: {{ (driverService.rideDetails$ | async)?.distance }} km • 
+          Time: {{ (driverService.rideDetails$ | async)?.time }} min
+        </p>
+
+        <div class="ride-options mb-4">
+          <label class="ride-type-card d-flex align-items-center p-2 mb-2 border rounded cursor-pointer" [class.active]="selectedValue === 'mini'">
+            <input type="radio" name="vehicle" value="mini" [(ngModel)]="selectedValue" class="d-none">
+            <div class="ms-2">
+              <div class="fw-bold">Mini</div>
+              <small class="text-muted">Affordable • 4 seats</small>
+            </div>
+            <div class="ms-auto fw-bold">₹ {{ 50 + (driverService.rideDetails$|async)?.distance * 10 | number }}</div>
+          </label>
+
+          <label class="ride-type-card d-flex align-items-center p-2 mb-2 border rounded cursor-pointer" [class.active]="selectedValue === 'sedan'">
+            <input type="radio" name="vehicle" value="sedan" [(ngModel)]="selectedValue" class="d-none">
+            <div class="ms-2">
+              <div class="fw-bold">Sedan</div>
+              <small class="text-muted">Comfort • 4 seats</small>
+            </div>
+            <div class="ms-auto fw-bold">₹ {{ 70 + (driverService.rideDetails$|async)?.distance * 14 | number }}</div>
+          </label>
+
+          <label class="ride-type-card d-flex align-items-center p-2 mb-2 border rounded cursor-pointer" [class.active]="selectedValue === 'suv'">
+            <input type="radio" name="vehicle" value="suv" [(ngModel)]="selectedValue" class="d-none">
+            <div class="ms-2">
+              <div class="fw-bold">SUV XL</div>
+              <small class="text-muted">Spacious • 6 seats</small>
+            </div>
+            <div class="ms-auto fw-bold">₹ {{ 100 + (driverService.rideDetails$|async)?.distance * 18 | number }}</div>
+          </label>
         </div>
 
-        <div class="dots-connector ms-3 my-1"></div>
+        <button (click)="checkoutDetails()" class="btn btn-primary w-100 py-3 rounded-3 fw-bold">Go to Checkout</button>
+      }
 
-        <div class="input-group">
-          <span class="input-group-text bg-light border-0"></span>
-          <input type="text" class="form-control border-0 bg-light" placeholder="Drop Destination">
+      @else {
+        <h5 class="fw-bold mb-4">Where to?</h5>
+
+        <div class="location-inputs mb-4">
+          <div class="position-relative mb-2">
+            <div class="input-group">
+              <input type="text" class="form-control border-0 bg-light" placeholder="Pickup Location" 
+                     [(ngModel)]="pickup" (input)="onPickupChange(pickup)">
+            </div>
+            <ul class="list-group position-absolute w-100 z-3 shadow" *ngIf="pickupSuggestions.length">
+              <li class="list-group-item list-group-item-action small" 
+                  *ngFor="let s of pickupSuggestions" (click)="selectPickup(s)">{{s.display_name}}</li>
+            </ul>
+          </div>
+
+          <div class="dots-connector ms-3 my-1"></div>
+
+          <div class="position-relative">
+            <div class="input-group">
+              <input type="text" class="form-control border-0 bg-light" placeholder="Drop Destination" 
+                     [(ngModel)]="drop" (input)="onDropChange(drop)">
+            </div>
+            <ul class="list-group position-absolute w-100 z-3 shadow" *ngIf="dropSuggestions.length">
+              <li class="list-group-item list-group-item-action small" 
+                  *ngFor="let s of dropSuggestions" (click)="selectDrop(s)">{{s.display_name}}</li>
+            </ul>
+          </div>
         </div>
 
-      </div>
+        <button (click)="rideRequest()" class="btn btn-primary w-100 py-3 rounded-3 fw-bold">
+          @if(loading$ | async) { Searching rides... } @else { Search }
+        </button>
 
-      <div class="ride-options mb-4">
-        <small class="text-muted d-block mb-2">Select Ride Type</small>
-        <div class="row g-2">
-          <div class="col-4">
-            <div class="ride-type-card active text-center p-2">
-              <i class="bi bi-car-front fs-3"></i>
-              <div class="small">Mini</div>
-            </div>
-          </div>
-          <div class="col-4">
-            <div class="ride-type-card text-center p-2">
-              <i class="bi bi-taxi-front fs-3"></i>
-              <div class="small">Sedan</div>
-            </div>
-          </div>
-          <div class="col-4">
-            <div class="ride-type-card text-center p-2">
-              <i class="bi bi-truck-front fs-3"></i>
-              <div class="small">SUV</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <button class="btn btn-primary w-100 py-3 rounded-3 fw-bold">Confirm Booking</button>
+        @if(msg$ | async; as msg) {
+          <div class="alert alert-danger mt-3 small">⚠ {{ msg }}</div>
+        }
+      }
     </div>
-
   </div>
 
+  <div class="map shadow-lg">
+    <div id="map"></div>
+  </div>
+</main> 
 
-  <div id="" class="map shadow-lg">
+<!-- 
 
-    <img src="map.jpg" alt="Map is here">
+<main class="booking-main">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+  <div class="booking-overlay">
+    <div class="booking-card shadow-effect">
+
+      @if(rideCheckoutDetails) {
+        <h5 class="card-title">Checkout</h5>
+        <div class="summary-container">
+          <div class="summary-row-vertical"><small>FROM</small><strong>{{rideCheckoutDetails.pickup}}</strong></div>
+          <div class="summary-row-vertical"><small>TO</small><strong>{{rideCheckoutDetails.drop}}</strong></div>
+          <hr class="divider">
+          <div class="summary-row-horizontal"><span>Distance</span><span>{{rideCheckoutDetails.distance}} KM</span></div>
+          <div class="summary-row-horizontal"><span>Vehicle</span><span>{{rideCheckoutDetails.vehicle | titlecase}}</span></div>
+          <hr class="divider">
+          <div class="summary-row-horizontal"><span>Fare</span><span>₹ {{rideCheckoutDetails.fare}}</span></div>
+          <div class="summary-row-horizontal"><span>GST</span><span>₹ {{rideCheckoutDetails.gst}}</span></div>
+          <div class="summary-row-horizontal total-row"><span>Total</span><span>₹ {{rideCheckoutDetails.fare + rideCheckoutDetails.gst | number}}</span></div>
+        </div>
+        <button (click)="bookRide()" class="btn-confirm">Book Ride</button>
+      }
+
+      @else if((driverService.rideDetails$ | async)?.distance && (driverService.rideDetails$ | async)?.time) {
+        <h5 class="card-title select-title">Choose a ride</h5>
+        <p class="route-display">{{pickup | titlecase}} -> {{drop | titlecase}}</p>
+        <p class="meta-data">
+          Distance: {{ (driverService.rideDetails$ | async)?.distance }} km • 
+          Time: {{ (driverService.rideDetails$ | async)?.time }} min
+        </p>
+
+        <div class="ride-options-list">
+          <label class="ride-option-item" [class.active]="selectedValue === 'mini'">
+            <input type="radio" name="vehicle" value="mini" [(ngModel)]="selectedValue" class="hidden-radio">
+            <div class="option-info">
+              <div class="option-name">Mini</div>
+              <small class="option-meta">Affordable • 4 seats</small>
+            </div>
+            <div class="option-price">₹ {{ 50 + (driverService.rideDetails$|async)?.distance * 10 | number }}</div>
+          </label>
+
+          <label class="ride-option-item" [class.active]="selectedValue === 'sedan'">
+            <input type="radio" name="vehicle" value="sedan" [(ngModel)]="selectedValue" class="hidden-radio">
+            <div class="option-info">
+              <div class="option-name">Sedan</div>
+              <small class="option-meta">Comfort • 4 seats</small>
+            </div>
+            <div class="option-price">₹ {{ 70 + (driverService.rideDetails$|async)?.distance * 14 | number }}</div>
+          </label>
+
+          <label class="ride-option-item" [class.active]="selectedValue === 'suv'">
+            <input type="radio" name="vehicle" value="suv" [(ngModel)]="selectedValue" class="hidden-radio">
+            <div class="option-info">
+              <div class="option-name">SUV XL</div>
+              <small class="option-meta">Spacious • 6 seats</small>
+            </div>
+            <div class="option-price">₹ {{ 100 + (driverService.rideDetails$|async)?.distance * 18 | number }}</div>
+          </label>
+        </div>
+
+        <button (click)="checkoutDetails()" class="btn-confirm">Go to Checkout</button>
+      }
+
+      @else {
+        <h5 class="card-title">Where to?</h5>
+
+        <div class="input-section">
+          <div class="input-container">
+            <div class="field-group">
+              <input type="text" class="location-input" placeholder="Pickup Location" 
+                     [(ngModel)]="pickup" (input)="onPickupChange(pickup)">
+            </div>
+            <ul class="suggestion-dropdown" *ngIf="pickupSuggestions.length">
+              <li class="suggestion-item" *ngFor="let s of pickupSuggestions" (click)="selectPickup(s)">{{s.display_name}}</li>
+            </ul>
+          </div>
+
+          <div class="vertical-connector"></div>
+
+          <div class="input-container">
+            <div class="field-group">
+              <input type="text" class="location-input" placeholder="Drop Destination" 
+                     [(ngModel)]="drop" (input)="onDropChange(drop)">
+            </div>
+            <ul class="suggestion-dropdown" *ngIf="dropSuggestions.length">
+              <li class="suggestion-item" *ngFor="let s of dropSuggestions" (click)="selectDrop(s)">{{s.display_name}}</li>
+            </ul>
+          </div>
+        </div>
+
+        <button (click)="rideRequest()" class="btn-confirm">
+          @if(loading$ | async) { Searching rides... } @else { Search }
+        </button>
+
+        @if(msg$ | async; as msg) {
+          <div class="error-alert">⚠ {{ msg }}</div>
+        }
+      }
+    </div>
   </div>
 
-</main>
+  <div class="map-container shadow-effect">
+    <div id="map"></div>
+  </div>
+</main> -->

@@ -1,108 +1,71 @@
-.feedback-page-wrapper {
-  height: calc(100vh - 80px); /* Adjust based on your header height */
-  overflow: hidden;
+.trips-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
 }
 
-.bg-indigo-fresh {
-  background: linear-gradient(180deg, #6366f1 0%, #4f46e5 100%);
-}
-
-.bg-indigo-soft { background: #e0e7ff; }
-
-.star-icon {
-  cursor: pointer;
-  color: #cbd5e1;
-  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.star-icon.active {
-  color: #f59e0b;
-  transform: scale(1.2);
-}
-
-.tag-chip {
-  background: #f1f5f9;
-  border: 1px solid transparent;
-  padding: 8px 18px;
-  border-radius: 50px;
-  font-size: 0.85rem;
-  transition: 0.3s;
-}
-
-.tag-chip.selected {
-  background: #6366f1;
-  color: white;
-  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
-}
-
-/* FAQ Styling */
-.faq-question {
-  cursor: pointer;
-  padding: 10px 0;
-}
-
-.bg-white-translucent {
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(10px);
-}
-
-.icon-blob {
-  width: 60px;
-  height: 60px;
+.trips-header {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
+  margin-bottom: 25px;
+}
+
+.trips-header h2 { margin: 0; font-size: 1.5rem; }
+.trips-header p { margin: 0; font-size: 0.85rem; color: #666; }
+
+
+.filter-group { display: flex; gap: 8px; margin-top: 10%; }
+.filter-btn {
+  padding: 6px 16px;
   border-radius: 20px;
-}
-
-.feedback-page-wrapper {
-  min-height: 85vh;
-  background: radial-gradient(circle at top left, rgba(99, 102, 241, 0.05), transparent);
-}
-
-.side-info-pane {
-  width: 300px;
-}
-
-.glass-pane {
-  background: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(10px);
-  border-radius: 24px;
-  border: 1px solid rgba(255, 255, 255, 0.4);
-}
-
-.feedback-card {
-  width: 100%;
-  max-width: 420px;
-  background: white;
-  padding: 35px;
-  border-radius: 30px;
-  border: 1px solid #f1f5f9;
-}
-
-/* Custom FAQ Accordion */
-.custom-faq .accordion-button {
-  font-size: 0.85rem;
-  font-weight: 600;
-  box-shadow: none;
-  color: #4b5563;
-}
-
-.custom-faq .accordion-button:not(.collapsed) {
-  color: #6366f1;
-}
-
-.star-btn { cursor: pointer; color: #e5e7eb; transition: 0.2s; }
-.star-btn.active { color: #fbbf24; transform: scale(1.1); }
-
-.tag-chip {
-  padding: 6px 15px;
-  border-radius: 50px;
-  border: 1px solid #e2e8f0;
+  border: 1px solid #ddd;
   background: white;
   font-size: 0.8rem;
-  margin: 3px;
-  transition: 0.3s;
+  cursor: pointer;
+}
+.filter-btn.active { background: #6366f1; color: white; border-color: #6366f1; }
+
+/* Trip Cards */
+.trips-list { display: flex; flex-direction: column; gap: 15px; }
+.trip-card {
+  display: grid;
+  grid-template-columns: 120px 1fr 150px 120px;
+  align-items: center;
+  padding: 20px;
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
 
-.tag-chip.selected { background: #6366f1; color: white; border-color: #6366f1; }
+.trip-card.cancelled { opacity: 0.7; background: #fafafa; }
+
+/* Content Columns */
+.trip-time-info { display: flex; flex-direction: column; text-align: center; border-right: 1px solid #eee; }
+.trip-time-info .date { font-weight: bold; font-size: 1.1rem; }
+.trip-time-info .time { font-size: 0.75rem; color: #888; }
+.vehicle-tag { font-size: 0.7rem; background: #f1f5f9; padding: 2px 8px; border-radius: 4px; margin-top: 5px; }
+
+.trip-route { padding: 0 20px; }
+.location { font-size: 0.9rem; margin-bottom: 8px; display: flex; align-items: center; }
+.dot { width: 8px; height: 8px; border-radius: 50%; margin-right: 10px; }
+.dot.pickup { background: #10b981; }
+.dot.drop { background: #ef4444; }
+
+.trip-payment { text-align: center; }
+.price { font-size: 1.2rem; font-weight: bold; }
+.status-label { font-size: 0.75rem; font-weight: bold; }
+.success { color: #10b981; }
+
+.action-btn {
+  padding: 8px 20px;
+  border-radius: 20px;
+  border: none;
+  background: #6366f1;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+.action-btn.secondary { background: #e2e8f0; color: #475569; }
+.action-btn:disabled { opacity: 0.6; }

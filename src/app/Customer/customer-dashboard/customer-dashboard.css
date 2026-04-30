@@ -60,15 +60,13 @@
   color: #667eea;
 }
 
-/* Container to align image and text horizontally */
 .logo-container {
   padding: 10px;
-  gap: 12px; /* Space between the car icon and the text */
+  gap: 12px; 
 }
 
-/* Control the logo image size specifically */
 .sidebar-logo-img {
-  width: 55px;          /* Adjust this until it looks right to you */
-  height: auto;         /* Maintains aspect ratio so it doesn't look stretched */
+  width: 55px;
+  height: auto;      
   object-fit: contain;  /* Ensures the image fits within the bounds */
 }

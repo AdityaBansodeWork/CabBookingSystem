@@ -1,69 +1,53 @@
-<div class="history-container p-4 animate__animated animate__fadeIn">
-  <div class="d-flex justify-content-between align-items-end mb-4">
-    <div>
-      <h2 class="fw-bold text-indigo-dark mb-1">My Trips</h2>
-      <p class="text-muted small">You have completed <span class="text-primary-fresh fw-bold">12 rides</span> this month</p>
+<div class="trips-container">
+  <div class="trips-header">
+    <div class="header-text">
+      <h2>My Trips</h2>
+      <p>You have completed 12 rides this month</p>
     </div>
-    <div class="filter-pills d-flex gap-2">
-      <button class="btn btn-sm btn-outline-primary rounded-pill px-3 active">All</button>
-      <button class="btn btn-sm btn-outline-primary rounded-pill px-3">Completed</button>
-      <button class="btn btn-sm btn-outline-primary rounded-pill px-3">Cancelled</button>
+    <div class="filter-group">
+      <button class="filter-btn active">All</button>
+      <button class="filter-btn">Completed</button>
+      <button class="filter-btn">Cancelled</button>
     </div>
   </div>
 
-  <div class="history-list d-flex flex-column gap-3">
-    
+  <div class="trips-list">
     @for (trip of trips; track trip.date) {
-      <div class="trip-card shadow-sm animate__animated animate__fadeInUp" 
-           [class.cancelled-trip]="trip.status === 'Cancelled'">
-        <div class="row align-items-center">
-          <div class="col-md-2 border-end text-center">
-            <div class="fw-bold fs-5 text-indigo-dark">{{trip.date}}</div>
-            <small class="text-muted text-uppercase fw-bold">{{trip.time}}</small>
-            <div class="vehicle-badge mt-2 mx-auto" [class.bg-light]="trip.status === 'Cancelled'">
-              <i class="bi bi-car-front-fill me-1"></i> {{trip.type}}
-            </div>
-          </div>
+      <div class="trip-card" [class.cancelled]="trip.status === 'Cancelled'">
+        
+        <div class="trip-time-info">
+          <span class="date">{{trip.date}}</span>
+          <span class="time">{{trip.time}}</span>
+          <div class="vehicle-tag">{{trip.type}}</div>
+        </div>
 
-          <div class="col-md-6 px-4">
-            <div class="route-display" [class.opacity-50]="trip.status === 'Cancelled'">
-              <div class="route-item mb-2">
-                <i class="bi bi-record-circle text-success me-3"></i>
-                <span class="location-text">{{trip.pickup}}</span>
-              </div>
-              <div class="route-line"></div>
-              <div class="route-item">
-                <i class="bi bi-geo-alt-fill text-danger me-3"></i>
-                <span class="location-text">{{trip.drop}}</span>
-              </div>
-            </div>
+        <div class="trip-route">
+          <div class="location">
+            <span class="dot pickup"></span> {{trip.pickup}}
           </div>
-
-          <div class="col-md-2 text-center">
-            <div class="fw-bold fs-4" [class.text-indigo-dark]="trip.status !== 'Cancelled'" [class.text-muted]="trip.status === 'Cancelled'">
-              ₹{{trip.price}}.00
-            </div>
-            @if (trip.status === 'Completed') {
-              <small class="text-success fw-bold"><i class="bi bi-check-circle"></i> Paid via Wallet</small>
-            } @else {
-              <small class="text-danger fw-bold">Cancelled</small>
-            }
-          </div>
-
-          <div class="col-md-2 text-end">
-            @if (trip.status === 'Completed') {
-              <button class="btn btn-fresh-blue rounded-pill px-4" 
-                      (click)="downloadReceipt(trip)"
-                      [disabled]="isDownloading() === trip.date">
-                {{ isDownloading() === trip.date ? '...' : 'Receipt' }}
-              </button>
-            } @else {
-              <button class="btn btn-light rounded-pill px-4">Details</button>
-            }
+          <div class="location">
+            <span class="dot drop"></span> {{trip.drop}}
           </div>
         </div>
+
+        <div class="trip-payment">
+          <div class="price">₹{{trip.price}}</div>
+          <span class="status-label" [class.success]="trip.status === 'Completed'">
+            {{ trip.status === 'Completed' ? 'Paid via Wallet' : 'Cancelled' }}
+          </span>
+        </div>
+
+        <div class="trip-action">
+          @if (trip.status === 'Completed') {
+            <button class="action-btn" (click)="downloadReceipt(trip)" [disabled]="isDownloading() === trip.date">
+              {{ isDownloading() === trip.date ? '...' : 'Receipt' }}
+            </button>
+          } @else {
+            <button class="action-btn secondary">Details</button>
+          }
+        </div>
+        
       </div>
     }
-
   </div>
 </div>
